@@ -7,6 +7,9 @@ parser.add_argument('-u', '--username', help='Salesforce username')
 parser.add_argument('-p', '--password', help='Salesforce password')
 parser.add_argument('-id', '--client_id', help='Salesforce client ID')
 parser.add_argument('-secret', '--client_secret', help='Salesforce client secret')
+parser.add_argument('-o', '--object', help='Salesforce object API')
+parser.add_argument('-rid', '--record_id', help='Record Id')
+parser.add_argument('-d', '--domain', help='Domain name')
 args = parser.parse_args()
 
 # Authenticate and get the bearer token
@@ -23,7 +26,7 @@ response = requests.post(auth_url, data=data)
 if response.status_code == 200:
     bearer_token = response.json().get('access_token')
     # Use the bearer token to update the custom field
-    update_url = 'https://udabby-230307-341-demo.my.salesforce.com/services/data/v58.0/sobjects/Asset/02iDm000001Ar2UIAS'
+    update_url = 'https://{}.my.salesforce.com/services/data/v58.0/sobjects/{}/{}.format(domain,object, record_id)'
     headers = {
         'Authorization': f'Bearer {bearer_token}',
         'Content-Type': 'application/json'
