@@ -29,7 +29,7 @@ response = requests.post(auth_url, data=data)
 if response.status_code == 200:
     bearer_token = response.json().get('access_token')
     # Use the bearer token to update the custom field
-    update_url = 'https://{}.my.salesforce.com/services/data/v58.0/sobjects/{}/{}.format(domain,object, record_id)'
+    update_url = f'https://{args.domain}.my.salesforce.com/services/data/v58.0/sobjects/{args.object}/{args.record_id}'
     headers = {
         'Authorization': f'Bearer {bearer_token}',
         'Content-Type': 'application/json'
@@ -44,4 +44,5 @@ if response.status_code == 200:
     else:
         print('Failed to update custom field.')
 else:
-    print('Authentication failed.')
+    error_message = response.json().get('error_description')
+    print(f'Authentication failed. Reason: {error_message}')
