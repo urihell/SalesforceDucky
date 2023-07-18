@@ -19,7 +19,10 @@ data = {
     'username': args.username,
     'password': args.password,
     'client_id': args.client_id,
-    'client_secret': args.client_secret
+    'client_secret': args.client_secret,
+    'domain': args.domain,
+    'record_id': args.record_id,
+    'object': args.object
 }
 response = requests.post(auth_url, data=data)
 
